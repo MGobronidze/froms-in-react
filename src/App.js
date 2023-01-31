@@ -1,25 +1,137 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [formData, setFormData]=React.useState({
+    firstName:"",
+    lastName:"",
+    email:"",
+    comments:"",
+    isFriendly: true,
+    employment:'',
+    favColor:""
+  })
+
+ 
+ 
+function handleChange(event){
+  
+  const {name, value, type, checked}=event.target
+
+  
+  setFormData(
+    prevData => {
+      return{
+        ...prevData,
+        [name]: type ==="checkbox"? checked: value
+      }
+    }
+  )
+}
+function handleSubmit(event){
+  event.preventDefault()
+  console.log(formData)
+}
+
+return(
+    
+
+    <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder='First Name'
+            onChange={handleChange}
+            name="firstName"
+            value={formData.firstName}
+
+          />
+          <input
+            type="text" 
+            placeholder='Last Name'
+            onChange={handleChange}
+            name="lastName"
+            value={formData.lastName}
+          />
+          <input
+            type="email" 
+            placeholder='Email'
+            onChange={handleChange}
+            name="email"
+            value={formData.email}
+          />
+          <textarea 
+            placeholder='Comments'
+            onChange={handleChange}
+            name="comments"
+            value ={formData.comments}
+          />
+          <input 
+            type="checkbox" 
+            id="isFriendly" 
+            checked={formData.isFriendly}
+            name ="isFriendly"
+            onChange={handleChange}
+          />
+          <label htmlFor="isFriendly">Are you friendly?</label>
+          <br />
+          <fieldset>
+              <legend>Current employment status</legend>
+              <input 
+                type='radio'
+                id="unemployed"
+                name='employment'
+                value='unemployed'
+                onChange={handleChange}
+                checked={formData.employment==='unemployed'}
+              />
+              <lebel htmlFor="unemployed">unemployed</lebel>
+              <br/>
+              <input
+                type='radio'
+                id="part-time"
+                name='employment'
+                value='part-time'
+                onChange={handleChange}
+                checked={formData.employment==='part-time'}
+               />
+               <lebel htmlFor="part-time">Part-time</lebel>
+               <br/>
+              <input
+                type="radio"
+                id='full-time'
+                name='employment'
+                value='full-time'
+                onChange={handleChange}
+                checked={formData.employment==='full-time'}
+               />
+               <lebel htmlFor='full-time'>Full-time</lebel>
+               <br/>
+          </fieldset>
+
+          <lebel htmlFor='favColor'>What is your favorite color?</lebel>
+          <br/>
+          <select
+                    id='favColor'
+                    value={formData.favColor}
+                    onChange={handleChange}
+                    name='favColor'
+               >
+                    <option value=''>--Choose--</option>
+                    <option value='red'>Red</option>
+                    <option value='green'>Green</option>
+                    <option value='yellow'>Yellow</option>
+                    <option value='orange'>Orange</option>
+                    <option value='blue'>Blue</option>
+                    <option value='indigo'>Indigo</option>
+                    <option value='violet'>Violet</option>
+
+          </select>
+
+          <button>Submit</button>
+          </form>
+
+)
 }
 
 export default App;
